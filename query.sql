@@ -1,6 +1,7 @@
 WITH cleaned_data as (select 
      `Customer ID`,
      InvoiceDate,
+     Country,
      Quantity*Price as revenue
 From 
     online_retail_II
@@ -21,6 +22,7 @@ Select
     c.cohort_month,
     toStartOfMonth(InvoiceDate) as invoice_month,
     dateDiff ('month', c.cohort_month, toStartOfMonth(cd.InvoiceDate)) as month_number,
+    cd.Country,
     count(distinct(cd.`Customer ID`)),
     sum (cd.revenue)
 From 
@@ -28,4 +30,4 @@ From
 Join 
     cohort as c 
 on cd.`Customer ID` = c.`Customer ID`
-Group by 1,2,3
+Group by 1,2,3,4
